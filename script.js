@@ -12,6 +12,7 @@ var Sprint = {
   barElement: null,
   barWrapperElement: null,
   goalElement: null,
+  newGoalElement: null,
   textElement: null,
 
   // Variables
@@ -45,13 +46,18 @@ var Sprint = {
       this.barElement.style.backgroundColor = '#FD3';
     }
 
-    var width = Math.ceil(fullWidth * progress) + 'px';
-    console.log(progress);
-    this.barElement.style.width = Math.ceil(fullWidth * progress) + 'px';
+    var width;
+    if (progress == 0) {
+      width = 0;
+    } else {
+      width = Math.ceil(fullWidth * progress);
+    }
+
+    this.barElement.style.width = width + 'px';
   },
 
   setGoal: function() {
-    var newGoal = document.getElementById('newgoal').value;
+    var newGoal = this.newGoalElement.value;
     if (isNaN(newGoal)) {
       return;
     }
@@ -68,7 +74,15 @@ var Sprint = {
     this.barElement = document.getElementById('wcbar');
     this.barWrapperElement = document.getElementById('wcbarwrapper');
     this.goalElement = document.getElementById('goal');
+    this.newGoalElement = document.getElementById('newgoal');
     this.textElement = document.getElementById('textarea');
+
+    this.newGoalElement.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode === 13) {
+          document.getElementById("setgoal").click();
+      }
+    });
 
     if (isNaN(this.goal)) {
       this.goalElement.innerHTML = 'Not Set';
