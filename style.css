@@ -27,6 +27,8 @@ p {
 #wcbar {
   background-color: #0680FF;
   height: 100%;
+  -webkit-transition: width 1s, -webkit-transform 1s; /* Safari */
+  transition: width 1s, ease-out 1s;
   width: 0;
 }
 

@@ -21,10 +21,7 @@ var Sprint = {
     if (this.textElement == null) {
       return;
     }
-    var top = this.textElement.getBoundingClientRect().top;
-    var windowHeight = window.innerHeight;
-    var textAreaHeight = windowHeight - top - this.textAreaPadding;
-    console.log('setting to ' + textAreaHeight);
+    var textAreaHeight = (window.innerHeight) - (this.textElement.getBoundingClientRect().top) - this.textAreaPadding;
     this.textElement.style.height = textAreaHeight;
   },
 
