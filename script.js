@@ -5,6 +5,9 @@ for (var i = 0, _query = window.location.search.substring(1).split('&'); i < _qu
 }
 
 var Sprint = {
+  // Constants
+  textAreaPadding: 10, // in px
+
   // DOM elements
   barElement: null,
   barWrapperElement: null,
@@ -14,17 +17,15 @@ var Sprint = {
   // Variables
   goal: __GET__['goal'],
 
-  setUp: function() {
-    this.barElement = document.getElementById("wcbar");
-    this.barWrapperElement = document.getElementById("wcbarwrapper");
-    this.goalElement = document.getElementById("goal");
-    this.textElement = document.getElementById("textarea");
-
-    if (isNaN(this.goal)) {
-      this.goalElement.innerHTML = 'Not Set';
-    } else {
-      this.goalElement.innerHTML = this.goal;
+  calculateTextAreaHeight: function() {
+    if (this.textElement == null) {
+      return;
     }
+    var top = this.textElement.getBoundingClientRect().top;
+    var windowHeight = window.innerHeight;
+    var textAreaHeight = windowHeight - top - this.textAreaPadding;
+    console.log('setting to ' + textAreaHeight);
+    this.textElement.style.height = textAreaHeight;
   },
 
   clear: function() {
@@ -44,7 +45,7 @@ var Sprint = {
     var progress = this.getWordCount() / this.goal;
     if (progress >= 1) {
       progress = 1;
-      this.barElement.style.backgroundColor = '#CCCC44';
+      this.barElement.style.backgroundColor = '#FD3';
     }
 
     var width = Math.ceil(fullWidth * progress) + 'px';
@@ -64,5 +65,22 @@ var Sprint = {
     this.goal = newGoal;
     this.goalElement.innerHTML = this.goal;
     this.resizeWcBar();
+  },
+
+  setUp: function() {
+    this.barElement = document.getElementById('wcbar');
+    this.barWrapperElement = document.getElementById('wcbarwrapper');
+    this.goalElement = document.getElementById('goal');
+    this.textElement = document.getElementById('textarea');
+
+    if (isNaN(this.goal)) {
+      this.goalElement.innerHTML = 'Not Set';
+      this.textElement.style.display = 'none';
+    } else {
+      this.goalElement.innerHTML = this.goal + ' words';
+    }
+
+    this.calculateTextAreaHeight();
+    window.addEventListener('resize', this.calculateTextAreaHeight.bind(this), true)
   }
 };
