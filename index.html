@@ -1,0 +1,23 @@
+<!--DOCTYPE html-->
+<html>
+	<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="style.css"></link> 
+	</head>
+	<body onLoad="Sprint.setUp()">
+		<div id="content">
+      <input placeholder="New Sprint Goal" type="text" id="newgoal" value="">
+      <button onclick="Sprint.setGoal()">New Sprint (Dangerously!)</button>
+      <button onclick="Sprint.clear()">Clear Writing (Dangerously!)</button>
+      <p>Goal: <span id="goal"></span></p>
+			<div id="wcbarwrapper">
+				<div id="wcbar"></div>
+			</div>
+			<br>
+			<!-- force to full width and fill height -->
+			<textarea autofocus id="textarea" oninput="Sprint.resizeWcBar()"></textarea>
+		</div>
+	</body>
+</html>
